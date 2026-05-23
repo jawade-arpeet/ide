@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS profiles (
+	id UUID PRIMARY KEY DEFAULT UUIDV7(),
+	account_id UUID UNIQUE NOT NULL REFERENCES accounts(id),
+	first_name VARCHAR(255) NOT NULL,
+	last_name VARCHAR(255) NOT NULL,
+	avatar_url TEXT,
+	updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
