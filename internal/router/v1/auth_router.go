@@ -10,14 +10,14 @@ func mountAuthRoutes(
 	router *gin.RouterGroup,
 	handler *handler.AuthHandler,
 ) {
-	authGroup := router.Group("/auth/")
+	authGroup := router.Group("/auth")
 	{
-		authGroup.POST("/sign-in/", handler.SignIn)
+		authGroup.POST("/sign-in", handler.SignIn)
 	}
 
-	profileGroup := router.Group("/profile/")
+	profileGroup := router.Group("/profile")
 	{
-		profileGroup.POST("/", handler.CreateProfile)
-		profileGroup.GET("/", handler.GetProfile)
+		profileGroup.POST("", handler.CreateProfile)
+		profileGroup.GET("", handler.GetProfile)
 	}
 }
