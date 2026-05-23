@@ -1,0 +1,19 @@
+{
+    "server": {
+        "port": 3000,
+        "run_env": "dev",
+        "jwt": {
+            "secret_key": "eBbtJiNlnXQ1rafMDJ+V/tT9eRNApSF8S92R3GEIhp0="
+        },
+        "totp": {
+            "issuer": "ide"
+        }
+    },
+    "postgres": {
+        "host": "localhost",
+        "port": 5432,
+        "username": "engineer",
+        "password": "password",
+        "database": "ide_db"
+    }
+}
