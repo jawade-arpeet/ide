@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"ide/internal/config"
 
+	"github.com/georgysavva/scany/v2/pgxscan"
+	"github.com/jackc/pgx/v5"
+
 	"github.com/jackc/pgx/v5/pgxpool"
 	"go.uber.org/zap"
 )
@@ -48,4 +51,57 @@ func newPostgresClient(ctx context.Context, cfg *config.PostgresConfig) (*Postgr
 	)
 
 	return &PostgresClient{pool: pool}, nil
+}
+
+func (c *PostgresClient) QueryAll(
+	ctx context.Context,
+	query string,
+	params pgx.NamedArgs,
+	result any,
+) error {
+	rows, err := c.pool.Query(ctx, query, params)
+	if err != nil {
+		return err
+	}
+
+	defer rows.Close()
+
+	if err := pgxscan.ScanAll(result, rows); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c *PostgresClient) QueryOne(
+	ctx context.Context,
+	query string,
+	params pgx.NamedArgs,
+	result any,
+) error {
+	rows, err := c.pool.Query(ctx, query, params)
+	if err != nil {
+		return err
+	}
+
+	defer rows.Close()
+
+	if err := pgxscan.ScanOne(result, rows); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c *PostgresClient) Exec(
+	ctx context.Context,
+	query string,
+	params pgx.NamedArgs,
+) (int64, error) {
+	cmdTg, err := c.pool.Exec(ctx, query, params)
+	if err != nil {
+		return 0, err
+	}
+
+	return cmdTg.RowsAffected(), nil
 }

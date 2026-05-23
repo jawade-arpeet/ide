@@ -5,6 +5,7 @@ import (
 	"ide/internal/client"
 	"ide/internal/config"
 	"ide/internal/handler"
+	"ide/internal/middleware"
 	"ide/internal/repository"
 	"ide/internal/router"
 	"ide/internal/service"
@@ -25,7 +26,8 @@ func NewServer(
 	repo := repository.NewRepository(client)
 	service := service.NewService(repo)
 	handler := handler.NewHandler(service)
-	router := router.NewRouter(serverCfg.RunEnv, handler)
+	middleware := middleware.NewMiddleware()
+	router := router.NewRouter(serverCfg.RunEnv, middleware, handler)
 
 	return &Server{
 		config: serverCfg,
