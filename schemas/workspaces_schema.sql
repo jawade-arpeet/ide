@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS workspaces (
+    id UUID PRIMARY KEY DEFAULT UUIDV7(),
+    name VARCHAR(127) NOT NULL,
+    slug VARCHAR(127) NOT NULL UNIQUE,
+    created_by UUID NOT NULL REFERENCES accounts(id),
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
