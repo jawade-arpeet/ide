@@ -16,4 +16,5 @@ func MountV1Routes(
 
 	mountHealthRoutes(v1, handler.Health)
 	mountAuthRoutes(v1, handler.Auth)
+	mountWorkspaceRoutes(v1, middleware, handler.Workspace)
 }
