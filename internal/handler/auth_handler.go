@@ -33,7 +33,7 @@ func (h *AuthHandler) SignIn(ctx *gin.Context) {
 	token, err := h.authService.SignIn(ctx.Request.Context(), &payload)
 	if err != nil {
 		ctx.JSON(
-			http.StatusUnauthorized,
+			http.StatusInternalServerError,
 			gin.H{"error": err.Error()},
 		)
 		return
