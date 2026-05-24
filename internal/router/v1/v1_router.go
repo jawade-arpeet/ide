@@ -14,6 +14,6 @@ func MountV1Routes(
 ) {
 	v1 := router.Group("/api/v1")
 
-	mountHealthRoutes(v1, middleware, handler.Health)
+	mountHealthRoutes(v1, handler.Health)
 	mountAuthRoutes(v1, handler.Auth)
 }
